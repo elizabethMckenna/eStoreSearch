@@ -1,0 +1,128 @@
+
+__________________________________________________________________________
+**************************     eStoreSearch    ***************************
+__________________________________________________________________________
+
+Project Information:   ___________________________________________________    
+    eStoreSearch
+    CIS*2430, Object-Oriented Programming, F20
+    Assignment 3 - Due 30/11/2020
+    Elizabeth McKenna
+    GuelphID#: 1053037
+
+
+Description: _____________________________________________________________
+
+The eStore is able to contain items that are either books or electronics.  
+The menu provides the users the options to (1) ADD, (2) SEARCH items to/in the eStore, or to (3) QUIT the eStore.
+
+Each item within the eStore is required to have a 6-digit "product ID" number that is unique from the IDs of all other items, a text "description", and a "year" parameter.  
+Optional fields for Book items are the "price", the "authors", and the "publisher" of the book. 
+Optional fields for Electronic items are the "price", and the "maker" of the item.
+
+When adding a product, the user can choose which type of item they would like to add to the catalogue, and then to add values to the fields by following the on-screen prompts.  For optional fields, the user may simply press <enter> in order to leave the field blank. 
+
+When searching for a product, it is optional for the user to enter search parameters in any combination (or none) of the the fields "productID", "keywords" to be matched to item descriptions, and the "year" field.  The year may be searched as one of (YYYY), where only products matching that year are returned, (-YYYY), where products whose years are up to and including the entered year are returned, (YYYY-), where products whose years that are the year entered or after are returned, or (YYYY-YYYY), where products whose years are within the range of the two years (inclusive) are returned.
+
+User Guide: ______________________________________________________________
+
+the program can be built using the command lines ./gradlew build
+
+
+the program can be run using the command lines
+         ./gradlew run   ( do no read data in from a text file)
+         or ./gradlew run --args="<filename.txt>" (read data in from a text file -- be sure to include any file extension, as it will not be added automatically)
+
+
+testing is done with JUnit tests.  All testing is done in the files: 
+    "BookTest.java", which performs tests on the Book class
+    "ElectronicTest.java", which performs tests on the Electronic class
+    "EStoreTest.java", which performs tests for methods within the eStoreSearch main method.
+        ** some JUnit tests fail now because of modifications made in methods... these were not fixed because jUnit tests were 
+        not included as part of the Assignment 3 marking scheme so I am assuming this means they are not being assigned grades.
+
+
+main is located in src/main/java/eStoreSearch/EStoreSearch.java
+
+a testFile has been included so that I can ensure that my submitted work is functioning properly.  You can use it if you want.
+
+
+Testing plan: ____________________________________________________________
+
+    - ensure boolean methods reach all return statements
+    - check number values when valid, invalid, positive, negative, and 0.
+    - check behavior of functions correct when given null data (particularily with string and arrayList types)
+    - when converting from a string to an int, be sure to check that error occurs when non-digit characters are entered.
+    
+    _____________________________________________  Search Function Testing:
+
+    - check full list returned when no parameters given
+    - check each search parameter is working individually for 
+        - elements at start of list
+        - elements at emd of list
+        - elements in middle of list
+        - elements using all kinds of year input variations
+        - keywords differing in case
+        - keywords search with a single keyword
+        - keywords search with multiple keywords
+            - in order different from original order
+        - keywords search cathc only word exactly, not substrings
+        - check all parameters match for product to be a match
+
+    reason(s) for test cases are listed as comments in the test files.
+
+    _____________________________________________  Input File Testing:
+    - check reads properly formatted
+    - check it does not read non-unique IDs into product list
+    - properly closes/returns message when input has wrong number of lines
+    - check it handles case where parameter value is null or double quotations are not available
+
+     _____________________________________________  GUI Functionality Testing:
+     - not sure how to write JUnit tests for this, but tested by running the GUI
+     - do the correct fields appear/dissapear depending on the tabs
+     - try buttons and chaging panels in different orders to ensure components prodperly being enabled/disabled
+     - try a variety of both valid and invalid inputs to ensure validity testing and error messages are both 
+     appearing correctly and are intuitive to help the user(and me) understand/resolve the issue
+     - values are being reset properly (everything is cleared... nothin is sticking around)
+     - labels and text fields are for matching fields (right stuff is stuck together, and nothing is mislabeled)
+     -read from and write to file work
+        -write to file fucntions for both menu exit option and for red exit button
+    - scroll bars are funcitoning properly and allow user to see all contents of the screen
+    -components are flexible with the screen size (assuming you dont make it so tiny that the screen is too small to physically fit anything)
+
+
+
+Assumptions: ____________________________________________________________
+When reading from a file, it is expected that double quotations will not be inlcuded in the description names
+When reading file, it is expected that all values for each product will have their own line... even if there is no value for that object, it should be filled with the objects defaulted/null state (ie, there is always a separate line for each parameter of teh product, whether or not there is a value for that parameter.)
+It is assumed that the order of the product values in the input file is in the order 
+        type, productID, desciption, price, year, authors (included for 'book' type products only), publisher (included for 'book' type products only), maker (inlcuded for 'electronic' type products only).
+blank lines in the input file are okay.  they are simply ignored by program, and improve file readability.
+
+Misc/Notes: ____________________________________________________________________
+The searchInputMethod doesn't throw exceptions because it defaults invalid data to its null values, aand does not include it 
+as a search parameter.  This was the original fucntionality of the method as it was written in my Assignment 2, and I didn't
+want to modify this to handle incorrect data differently.
+
+For the search year input, to search in a single year, the input in both startYear and endYear should be the same (ex, both contain value 2020).
+To search in format -YYYY, startYear should be 0 or empty (or invalud so it is defaulted to a zero value), and end your should be a valid year of 
+form YYYY.  To search in format YYYY-. end year should be 0 or empty (or invalid). and start year should be a valid year of form YYYY.  To search
+in format YYYY-YYYY, simply enter valid values of form YYYY to the start year and end year text fields... note that the order does not actually 
+matter because there is a validity checker inside of the method that checks they are chronologically ordered, and if not, automatically switches
+the values so that the function may continue to run properly without an error message.
+
+Im not totally sure how to add exception handling to my mutator classes.  They are of boolean types and are used frequently throughout the code for 
+both setting and validity checking... when I began to change these, the code seemed to be handling this very inelegantly, so I switched it back because
+the original version seemed much less messy to me (especially when I used the method to check for validity)
+    If i were to do this assignment again, I would definately perform my validity checks differently, and would probably separate these validity checks
+    from the mutator methods and have separate methods for them... when I realized this, I was already in too deep to easily fix this.
+
+
+Known Bugs: __________________________________________________________________________
+In the search function, the ProductID and keywords text field must have text input... start year and end year can be left blank and it's fine, 
+but there must be non blank input in the other 2.... can't figure out why, and it really kinda messes up the search feature.
+    There arent any invalid keyword inputs, but an invalid productID will act as if the search parameter is not there at all, and a productID
+    that is valid, but not contained in the list acts (as it should), as a search parameter and required a product match for a search result to be found.
+There is no abstract class because I wasnt sure what methods in that abstract class would become the abstract methods.  Question-- if I am using the 
+"super" keyword to construct my derived classes, is it possible to have the call to the super defined as an abstract class within the subclass itself,
+or am I trying to go at this all wrong (and if yes, how so/whats the approach I should be taking?)

@@ -1,0 +1,23 @@
+type = "book"
+productID = "000025"
+description = "Absolute Java"
+price = "199.95"
+year = "2015"
+authors = "Walter Savith, Kenrich Mock"
+publisher = "Pearson"
+
+type = "electronic"
+productID = "000107"
+description = "MacBook Air 11\"
+price = "1099.99"
+year = "2013"
+maker = "Apple Inc."
+
+type = "book"
+productID = "000026"
+description = "Absolute Java"
+price = "199.95"
+year = "2015"
+authors = "Walter Savith, Kenrich Mock"
+publisher = "Pearson"
+
